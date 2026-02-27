@@ -348,7 +348,11 @@ def supa_get_user(email):
     if not (SUPABASE_URL and SUPABASE_KEY):
         raise RuntimeError("Supabase não configurado")
     url = f"{SUPABASE_URL}/rest/v1/users_auth"
-    headers = {"apikey": SUPABASE_KEY, "Authorization": f"Bearer {SUPABASE_KEY}"}
+    headers = {
+        "apikey": SUPABASE_KEY,
+        "Authorization": f"Bearer {SUPABASE_KEY}",
+        "Accept-Profile": "public"
+    }
     params = {"select": "email,password_hash,active", "email": f"eq.{email}", "limit": "1"}
     try:
         r = requests.get(url, headers=headers, params=params, timeout=20)
@@ -390,6 +394,25 @@ def login_post():
 def logout():
     session.clear()
     return redirect(url_for("login"))
+
+@app.get("/health/supabase")
+def health_supabase():
+    try:
+        if not (SUPABASE_URL and SUPABASE_KEY):
+            return jsonify({"ok": False, "error": "vars ausentes"}), 500
+        url = f"{SUPABASE_URL}/rest/v1/users_auth"
+        headers = {
+            "apikey": SUPABASE_KEY,
+            "Authorization": f"Bearer {SUPABASE_KEY}",
+            "Accept-Profile": "public"
+        }
+        params = {"select": "email", "limit": "1"}
+        r = requests.get(url, headers=headers, params=params, timeout=15)
+        r.raise_for_status()
+        data = r.json()
+        return jsonify({"ok": True, "status": r.status_code, "sample": data}), 200
+    except Exception as e:
+        return jsonify({"ok": False, "error": str(e)}), 500
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000)

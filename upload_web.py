@@ -26,7 +26,8 @@ app.secret_key = os.getenv("APP_SECRET") or os.urandom(24)
 
 LOGO_PATH = r"C:\Users\lelee\Downloads\logoalx.png"
 if not os.path.exists(LOGO_PATH):
-    LOGO_PATH = os.path.join(app.static_folder, "logo.png")
+    static_logo = os.path.join(app.static_folder, "logo.png")
+    LOGO_PATH = static_logo if os.path.exists(static_logo) else None
 
 # carregar .env (opcional)
 if load_dotenv:
@@ -119,7 +120,12 @@ def download(name):
 
 @app.get("/logo")
 def logo():
-    return send_file(LOGO_PATH)
+    if LOGO_PATH and os.path.exists(LOGO_PATH):
+        return send_file(LOGO_PATH)
+    # transparente 1x1 PNG
+    transparent_png_b64 = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNgYAAAAAMAASsJTYQAAAAASUVORK5CYII="
+    data = base64.b64decode(transparent_png_b64)
+    return send_file(io.BytesIO(data), mimetype="image/png")
 
 @app.get("/favicon.ico")
 def favicon():

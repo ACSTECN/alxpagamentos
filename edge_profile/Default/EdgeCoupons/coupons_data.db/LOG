@@ -1,0 +1,5 @@
+2026/02/26-21:18:24.386 10678 Creating DB C:\Users\lelee\OneDrive\Documentos\ALX\TRAE ALX\edge_profile\Default\EdgeCoupons/coupons_data.db since it was missing.
+2026/02/26-21:18:24.391 10678 Reusing MANIFEST C:\Users\lelee\OneDrive\Documentos\ALX\TRAE ALX\edge_profile\Default\EdgeCoupons/coupons_data.db/MANIFEST-000001
+2026/02/26-21:18:24.748 852c Level-0 table #5: started
+2026/02/26-21:18:24.766 852c Level-0 table #5: 681585 bytes OK
+2026/02/26-21:18:24.767 852c Delete type=0 #3

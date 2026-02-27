@@ -2,7 +2,6 @@ import os
 from datetime import datetime
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory, jsonify, send_file, session
 from werkzeug.utils import secure_filename
-import pandas as pd
 import requests
 import uuid
 import decimal
@@ -144,11 +143,13 @@ def latest_file():
     return files[0]
 
 def read_df(path):
+    import pandas as pd
     if path.lower().endswith(".csv"):
         return pd.read_csv(path)
     return pd.read_excel(path)
 
 def read_df_bytes(data, name):
+    import pandas as pd
     ext = (name.rsplit(".",1)[-1] if "." in name else "").lower()
     if ext == "csv":
         return pd.read_csv(io.BytesIO(data))
@@ -271,6 +272,7 @@ def process_get():
     if not session.get("user"):
         return redirect(url_for("login"))
     try:
+        import pandas as pd
         fname = latest_file()
         df = None
         if fname and not SERVERLESS:

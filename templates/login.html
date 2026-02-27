@@ -13,10 +13,13 @@ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-se
 .hero .inner{max-width:420px;margin:0 auto;display:flex;align-items:center;gap:16px;padding:0 16px;justify-content:center}
 .hero img{height:84px;width:auto}
 .wrap{max-width:420px;margin:24px auto;padding:0 16px;min-height:calc(100vh - 200px);display:flex;align-items:center;justify-content:center}
-.card{background:#12161c;border:1px solid #1f2730;border-radius:14px;padding:22px}
+.card{background:#12161c;border:1px solid #1f2730;border-radius:14px;padding:22px;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+.brand{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:14px}
+.brand img{height:48px;width:auto;border-radius:8px}
+.brand h2{margin:0;font-size:18px;color:#e6e6e6}
 label{display:block;margin-bottom:8px}
 input[type=text],input[type=password]{width:100%;padding:14px;border:1px solid #273042;border-radius:12px;background:#eaf2ff;color:#0b0d10;text-align:center}
-.btn{width:100%;padding:12px;border:0;border-radius:10px;background:#2aa9ff;color:#0b0d10;cursor:pointer;margin-top:14px;font-weight:600}
+.btn{width:100%;padding:12px;border:0;border-radius:12px;background:linear-gradient(135deg,#2aa9ff 0%,#6bbcff 100%);color:#0b0d10;cursor:pointer;margin-top:14px;font-weight:600}
 .muted{color:#9aa4af;font-size:12px}
 .error{color:#ff6b6b;font-size:13px;margin-bottom:10px}
 </style>
@@ -31,6 +34,10 @@ input[type=text],input[type=password]{width:100%;padding:14px;border:1px solid #
 </div>
 <div class="wrap">
   <div class="card">
+    <div class="brand">
+      <img src="{{ logo_url }}" alt="ALX Entregas">
+      <h2>ALX Entregas</h2>
+    </div>
     {% if error %}<div class="error">{{ error }}</div>{% endif %}
     <form method="post" action="/login">
       <label>E-mail</label>

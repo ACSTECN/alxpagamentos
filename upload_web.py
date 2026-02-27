@@ -129,7 +129,11 @@ def logo():
 
 @app.get("/favicon.ico")
 def favicon():
-    return send_file(LOGO_PATH)
+    if LOGO_PATH and os.path.exists(LOGO_PATH):
+        return send_file(LOGO_PATH)
+    transparent_png_b64 = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNgYAAAAAMAASsJTYQAAAAASUVORK5CYII="
+    data = base64.b64decode(transparent_png_b64)
+    return send_file(io.BytesIO(data), mimetype="image/png")
 
 def latest_file():
     files = [f for f in os.listdir(DEST_DIR) if os.path.isfile(os.path.join(DEST_DIR, f))]

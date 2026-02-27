@@ -15,7 +15,8 @@ try:
 except Exception:
     load_dotenv = None
 
-DEST_DIR = r"C:\Users\lelee\OneDrive\Documentos\ALX\TRAE ALX\performance"
+DEFAULT_LOCAL_DIR = r"C:\Users\lelee\OneDrive\Documentos\ALX\TRAE ALX\performance"
+DEST_DIR = "/tmp/performance" if os.getenv("VERCEL") else DEFAULT_LOCAL_DIR
 os.makedirs(DEST_DIR, exist_ok=True)
 
 ALLOWED = {"xlsx", "csv"}
@@ -134,6 +135,9 @@ def favicon():
     data = base64.b64decode(transparent_png_b64)
     return send_file(io.BytesIO(data), mimetype="image/png")
 
+@app.get("/health")
+def health():
+    return jsonify({"ok": True}), 200
 def latest_file():
     files = [f for f in os.listdir(DEST_DIR) if os.path.isfile(os.path.join(DEST_DIR, f))]
     files = [f for f in files if f.lower().endswith((".xlsx", ".csv"))]

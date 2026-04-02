@@ -1,0 +1,6 @@
+2026/03/02-19:48:11.073 fb54 Reusing MANIFEST C:\Users\lelee\OneDrive\Documentos\ALX\TRAE ALX\edge_profile\Default\EdgeCoupons/coupons_data.db/MANIFEST-000001
+2026/03/02-19:48:11.077 fb54 Recovering log #65
+2026/03/02-19:48:11.077 fb54 Reusing old log C:\Users\lelee\OneDrive\Documentos\ALX\TRAE ALX\edge_profile\Default\EdgeCoupons/coupons_data.db/000065.log 
+2026/03/02-19:48:11.214 addc Level-0 table #69: started
+2026/03/02-19:48:11.219 addc Level-0 table #69: 681764 bytes OK
+2026/03/02-19:48:11.220 addc Delete type=0 #65

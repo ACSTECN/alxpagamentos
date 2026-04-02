@@ -30,6 +30,11 @@ th,td{padding:10px;border-bottom:1px solid #1f2730;font-size:14px}
 a{color:#2aa9ff;text-decoration:none}
 .muted{color:#9aa4af;font-size:12px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.banner{padding:12px 14px;border-radius:12px;margin-bottom:16px;font-size:14px}
+.banner.ok{background:#0d2c1f;border:1px solid #1c6b47;color:#b8f5d2}
+.banner.error{background:#2b1212;border:1px solid #8d2f2f;color:#ffc5c5}
+.status-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:16px}
+.chip-status{padding:8px 12px;border-radius:999px;font-size:12px;border:1px solid #273042;background:#0b0d10;color:#9aa4af}
 @media (max-width:740px){.grid{grid-template-columns:1fr}.hero .inner{flex-direction:column}}
 </style>
 </head>
@@ -45,6 +50,9 @@ a{color:#2aa9ff;text-decoration:none}
   </div>
 </div>
 <div class="wrap">
+  {% if inter_message %}
+    <div class="banner {{ inter_status or 'ok' }}">{{ inter_message }}</div>
+  {% endif %}
   <div class="card">
     <div class="grid">
       <div>
@@ -64,8 +72,10 @@ a{color:#2aa9ff;text-decoration:none}
             <span class="muted" style="margin-left:10px">Destino: {{ dest }}</span>
           </div>
         </form>
-        <div style="margin-top:16px">
+        <div class="status-row">
           <a class="btn-link" href="/process">Processar arquivo mais recente (PIX)</a>
+          <a class="btn-link" href="/test-inter">Testar conexão Inter</a>
+          <div class="chip-status">{{ "Inter configurado" if inter_ready else "Inter pendente" }}</div>
         </div>
       </div>
       <div>
@@ -73,7 +83,8 @@ a{color:#2aa9ff;text-decoration:none}
         <div class="muted">
           Aceita .xlsx e .csv<br>
           O arquivo é salvo com timestamp na pasta de destino<br>
-          Use colunas id_pagamento, nome, documento, chave_pix, valor, descricao para PIX
+          Use colunas id_pagamento, nome, documento, chave_pix, valor, descricao para PIX<br>
+          Valide a conexão do Banco Inter antes de iniciar o processamento
         </div>
       </div>
     </div>

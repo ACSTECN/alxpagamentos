@@ -85,7 +85,16 @@ def index():
             if os.path.isfile(p):
                 files.append((name, os.path.getmtime(p), os.path.getsize(p)))
         files.sort(key=lambda x: x[1], reverse=True)
-    return render_template("index.html", files=files, dest=DEST_DIR, logo_url=url_for("logo"), user=session.get("user"))
+    return render_template(
+        "index.html",
+        files=files,
+        dest=DEST_DIR,
+        logo_url=url_for("logo"),
+        user=session.get("user"),
+        inter_status=request.args.get("inter_status", ""),
+        inter_message=request.args.get("inter_message", ""),
+        inter_ready=is_inter_configured()
+    )
 
 @app.post("/upload")
 def upload():
@@ -246,6 +255,10 @@ def get_token():
     r.raise_for_status()
     return r.json().get("access_token")
 
+def is_inter_configured():
+    cp, kp = get_cert_paths()
+    return bool(CLIENT_ID and CLIENT_SECRET and TOKEN_URL and cp and kp)
+
 def pay_pix(token, row):
     if not PIX_URL:
         raise RuntimeError("INTER_PIX_URL/BASE_URL não configurado")
@@ -343,6 +356,18 @@ def process_get():
         )
     except Exception as e:
         return jsonify({"ok": False, "error": str(e)}), 400
+
+@app.get("/test-inter")
+def test_inter():
+    if not session.get("user"):
+        return redirect(url_for("login"))
+    try:
+        token = get_token()
+        if not token:
+            raise RuntimeError("Token não retornado pelo Inter")
+        return redirect(url_for("index", inter_status="ok", inter_message="Conexão com Banco Inter validada com sucesso"))
+    except Exception as e:
+        return redirect(url_for("index", inter_status="error", inter_message=f"Falha ao validar Banco Inter: {str(e)}"))
 
 def supa_get_user(email):
     if not (SUPABASE_URL and SUPABASE_KEY):

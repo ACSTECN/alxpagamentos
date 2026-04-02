@@ -1,2 +1,3 @@
-2026/02/26-21:18:16.958 852c Creating DB C:\Users\lelee\OneDrive\Documentos\ALX\TRAE ALX\edge_profile\Default\Sync Data\LevelDB since it was missing.
-2026/02/26-21:18:16.992 852c Reusing MANIFEST C:\Users\lelee\OneDrive\Documentos\ALX\TRAE ALX\edge_profile\Default\Sync Data\LevelDB/MANIFEST-000001
+2026/03/02-19:49:56.438 11488 Reusing MANIFEST C:\Users\lelee\OneDrive\Documentos\ALX\TRAE ALX\edge_profile\Default\Sync Data\LevelDB/MANIFEST-000001
+2026/03/02-19:49:56.438 11488 Recovering log #3
+2026/03/02-19:49:56.439 11488 Reusing old log C:\Users\lelee\OneDrive\Documentos\ALX\TRAE ALX\edge_profile\Default\Sync Data\LevelDB/000003.log 
